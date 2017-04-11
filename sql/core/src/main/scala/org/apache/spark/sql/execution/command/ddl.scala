@@ -231,7 +231,8 @@ case class AlterTableSetPropertiesCommand(
     val table = catalog.getTableMetadata(tableName)
     DDLUtils.verifyAlterTableType(catalog, table, isView)
     // This overrides old properties
-    val newTable = table.copy(properties = table.properties ++ properties)
+       val newTable = table.copy(properties = table.properties ++ properties,
+        comment = properties.get("comment"))
     catalog.alterTable(newTable)
     Seq.empty[Row]
   }
